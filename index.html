@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>J.J.'s Sketchbooks</title>
+<style>
+  :root{
+    --navy-deep:#0B0F20;
+    --navy:#141B33;
+    --parchment:#F5EFE0;
+    --gold:#E8B93E;
+    --gold-dim:#8a6f22;
+    --ink:#1A1A2E;
+    --bio:#2E8B57;
+    --bio-dim:#153824;
+    --astro:#4C3FA1;
+    --astro-pink:#FF6FA5;
+    --astro-dim:#1e1a3d;
+    --danger:#e05a5a;
+    --ok:#5ad18a;
+
+    /* Shared voyage backdrop -- also used in science-quest-sketchbook.html */
+    --deck-bg:
+      radial-gradient(1.6px 1.6px at 8% 10%,  rgba(255,255,255,.55) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 22% 6%,  rgba(255,255,255,.4)  50%, transparent 51%),
+      radial-gradient(1.6px 1.6px at 78% 14%, rgba(255,255,255,.5)  50%, transparent 51%),
+      radial-gradient(1px 1px   at 60% 5%,   rgba(255,255,255,.35) 50%, transparent 51%),
+      radial-gradient(1.4px 1.4px at 40% 22%, rgba(255,255,255,.4)  50%, transparent 51%),
+      radial-gradient(1px 1px   at 90% 26%,  rgba(255,255,255,.3)  50%, transparent 51%),
+      radial-gradient(1.4px 1.4px at 12% 34%, rgba(255,255,255,.3)  50%, transparent 51%),
+      radial-gradient(1px 1px   at 70% 38%,  rgba(255,255,255,.25) 50%, transparent 51%),
+      repeating-linear-gradient(180deg, transparent 0 42px, rgba(93,150,199,.05) 42px 43px),
+      linear-gradient(180deg, #0B0F20 0%, #0d1428 38%, #0a1730 66%, #0c1c33 100%);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{background:var(--deck-bg); background-color:var(--navy-deep); height:100%;}
+  html,body{margin:0;padding:0;min-height:100%;}
+  body{
+    background:var(--deck-bg); background-color:var(--navy-deep);
+    color:var(--parchment);
+    font-family:system-ui, -apple-system, sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:ui-rounded, 'SF Pro Rounded', system-ui, sans-serif; font-weight:700; margin:0;}
+  .stamp{font-family:ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing:.14em; text-transform:uppercase;}
+
+  .wrap{max-width:820px; margin:0 auto; padding:28px 18px 60px;}
+
+  /* ---------- Porthole hero ---------- */
+  .hero{text-align:center; padding-top:8px;}
+  .porthole{width:150px; height:150px; margin:0 auto 18px;}
+  .nameplate{
+    display:inline-block; padding:4px 14px; border-radius:20px;
+    background:rgba(232,185,62,.12); border:1px solid rgba(232,185,62,.4);
+    color:var(--gold); font-size:11px; margin-bottom:10px;
+  }
+  .hero h1{font-size:34px; color:var(--parchment); letter-spacing:.01em; line-height:1.15;}
+  .hero .sub{color:var(--gold); font-size:16px; font-weight:600; margin-top:6px;}
+  .hero p{color:rgba(245,239,224,.65); font-size:14px; max-width:420px; margin:12px auto 0; line-height:1.5;}
+
+  /* ---------- Logbook cards ---------- */
+  .fleet{display:grid; grid-template-columns:1fr; gap:16px; margin:32px 0;}
+  @media(min-width:640px){ .fleet{grid-template-columns:1fr 1fr;} }
+
+  .book{
+    position:relative; border-radius:18px; padding:22px 20px 20px 26px;
+    background:linear-gradient(155deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 10px 24px rgba(0,0,0,.35);
+    overflow:hidden;
+  }
+  .book::before{ /* stitched spine */
+    content:""; position:absolute; left:0; top:0; bottom:0; width:10px;
+    background:repeating-linear-gradient(180deg, var(--spine,var(--gold)) 0 5px, rgba(0,0,0,.25) 5px 10px);
+    opacity:.55;
+  }
+  .book::after{ /* brass corner rivet */
+    content:""; position:absolute; top:10px; right:10px; width:9px; height:9px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff5cf, var(--gold) 55%, var(--gold-dim) 100%);
+    box-shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+  .book.science{--spine:var(--bio);}
+  .book.astro{--spine:var(--astro-pink);}
+
+  .book .icon{font-size:30px;}
+  .book h2{font-size:20px; color:var(--parchment); margin-top:8px;}
+  .book .tagline{font-size:12px; color:var(--gold); font-weight:600; margin-top:2px;}
+  .book p{font-size:13.5px; color:rgba(245,239,224,.75); line-height:1.5; margin:10px 0 14px;}
+  .book .stats{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+  .book .stats span{
+    font-size:11px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.1);
+    border-radius:8px; padding:4px 8px; color:rgba(245,239,224,.8);
+  }
+  .book a.go{
+    display:block; text-align:center; text-decoration:none;
+    padding:12px; border-radius:12px; font-weight:700; font-size:14.5px;
+    color:var(--ink); background:linear-gradient(180deg,#f6d675,var(--gold));
+    box-shadow:0 4px 0 var(--gold-dim);
+  }
+  .book a.go:active{transform:translateY(2px); box-shadow:0 2px 0 var(--gold-dim);}
+
+  /* ---------- Connection panel ---------- */
+  .bridge{
+    border-radius:18px; padding:20px; margin:8px 0 30px;
+    background:rgba(255,255,255,.045); border:1px dashed rgba(232,185,62,.35);
+  }
+  .bridge h3{color:var(--gold); font-size:15px; margin-bottom:12px;}
+  .chain{display:flex; flex-direction:column; gap:10px;}
+  .chain .row{display:flex; align-items:center; gap:10px; font-size:13.5px; color:rgba(245,239,224,.85); line-height:1.4;}
+  .chain .row b{color:var(--parchment);}
+  .chain .arrow{color:var(--gold); font-size:16px; flex-shrink:0;}
+
+  /* ---------- Footer ---------- */
+  .footer{text-align:center; margin-top:10px;}
+  .footer .stamp{color:rgba(245,239,224,.4); font-size:10px;}
+
+  @media (prefers-reduced-motion: no-preference){
+    .porthole .twinkle{animation:tw 3.2s ease-in-out infinite;}
+    .porthole .twinkle:nth-child(2){animation-delay:.6s;}
+    .porthole .twinkle:nth-child(3){animation-delay:1.2s;}
+    .porthole .twinkle:nth-child(4){animation-delay:1.8s;}
+    @keyframes tw{0%,100%{opacity:.35;} 50%{opacity:1;}}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <svg class="porthole" viewBox="0 0 150 150" aria-hidden="true">
+      <circle cx="75" cy="75" r="70" fill="url(#glassGrad)"/>
+      <circle class="twinkle" cx="40" cy="35" r="1.6" fill="#fff"/>
+      <circle class="twinkle" cx="95" cy="28" r="1.2" fill="#fff"/>
+      <circle class="twinkle" cx="112" cy="55" r="1.6" fill="#fff"/>
+      <circle class="twinkle" cx="55" cy="20" r="1.1" fill="#fff"/>
+      <path d="M8,92 Q37,80 75,92 T142,92" stroke="#3a6ea5" stroke-width="3" fill="none" opacity=".55"/>
+      <path d="M8,104 Q37,96 75,104 T142,104" stroke="#2c5580" stroke-width="3" fill="none" opacity=".45"/>
+      <circle cx="75" cy="75" r="70" fill="none" stroke="#8a6f22" stroke-width="7"/>
+      <circle cx="75" cy="75" r="70" fill="none" stroke="url(#brassGrad)" stroke-width="5"/>
+      <g fill="url(#brassGrad)">
+        <circle cx="75" cy="6" r="4"/><circle cx="75" cy="144" r="4"/>
+        <circle cx="6" cy="75" r="4"/><circle cx="144" cy="75" r="4"/>
+        <circle cx="27" cy="27" r="3.4"/><circle cx="123" cy="27" r="3.4"/>
+        <circle cx="27" cy="123" r="3.4"/><circle cx="123" cy="123" r="3.4"/>
+      </g>
+      <defs>
+        <radialGradient id="glassGrad" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#1b2a52"/>
+          <stop offset="55%" stop-color="#0f1730"/>
+          <stop offset="100%" stop-color="#080b16"/>
+        </radialGradient>
+        <linearGradient id="brassGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fff3c4"/>
+          <stop offset="50%" stop-color="#E8B93E"/>
+          <stop offset="100%" stop-color="#8a6f22"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="nameplate stamp">⚓ Logbook Collection</div>
+    <h1>J.J.'s Sketchbooks</h1>
+    <div class="sub">Two logbooks. One ship. Same universe.</div>
+    <p>Every deck of this ship teaches you something different — but it's all connected. Pick a logbook and start exploring. 👇</p>
+  </div>
+
+  <div class="fleet">
+    <div class="book science">
+      <div class="icon">🧪</div>
+      <h2>Science Quest</h2>
+      <div class="tagline">THE SKETCHBOOK SAGA</div>
+      <p>Explore 5 worlds below deck. Fight boss battles. Figure out how everything — cells, forces, chemicals, ecosystems — actually works.</p>
+      <div class="stats">
+        <span>🗺️ 5 Worlds</span>
+        <span>⚔️ 13 Boss Fights</span>
+      </div>
+      <a class="go" href="https://photonsciencesketchbooksaga.netlify.app">Open Logbook →</a>
+    </div>
+
+    <div class="book astro">
+      <div class="icon">🔭</div>
+      <h2>Astro Sketchbook</h2>
+      <div class="tagline">TAO EXAM PREP</div>
+      <p>Climb to the crow's nest. Sketch the sky, spin it, rebuild it from memory. Learn how the same rules run the whole universe.</p>
+      <div class="stats">
+        <span>🌌 6 Modules</span>
+        <span>⭐ 80 Concepts</span>
+      </div>
+      <a class="go" href="https://astrosketchbook.vercel.app/">Open Logbook →</a>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <h3>🌉 THE BIG CONNECTION</h3>
+    <div class="chain">
+      <div class="row"><span class="arrow">🔥</span><span>Science Quest teaches <b>heat &amp; energy</b> in a beaker.</span></div>
+      <div class="row"><span class="arrow">➡️</span><span>Astro Sketchbook shows a <b>star</b> — the same heat &amp; energy, just billions of times bigger.</span></div>
+      <div class="row"><span class="arrow">🧲</span><span>Science Quest teaches the <b>force</b> that pulls a dropped pencil down.</span></div>
+      <div class="row"><span class="arrow">➡️</span><span>Astro Sketchbook shows <b>gravity</b> holding entire galaxies together.</span></div>
+      <div class="row"><span class="arrow">🧠</span><span>Same rules. Different scale. Learn it small, spot it big.</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="stamp">Fair winds &amp; following seas, Explorer ⚓</div>
+  </div>
+
+</div>
+</body>
+</html>
