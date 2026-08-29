@@ -63,6 +63,7 @@
   /* ---------- Logbook cards ---------- */
   .fleet{display:grid; grid-template-columns:1fr; gap:16px; margin:32px 0;}
   @media(min-width:640px){ .fleet{grid-template-columns:1fr 1fr;} }
+  @media(min-width:960px){ .fleet{grid-template-columns:1fr 1fr 1fr;} }
 
   .book{
     position:relative; border-radius:18px; padding:22px 20px 20px 26px;
@@ -83,6 +84,7 @@
   }
   .book.science{--spine:var(--bio);}
   .book.astro{--spine:var(--astro-pink);}
+  .book.thematic{--spine:var(--gold);}
 
   .book .icon{font-size:30px;}
   .book h2{font-size:20px; color:var(--parchment); margin-top:8px;}
@@ -161,7 +163,7 @@
 
     <div class="nameplate stamp">⚓ Logbook Collection</div>
     <h1>J.J.'s Sketchbooks</h1>
-    <div class="sub">Two logbooks. One ship. Same universe.</div>
+    <div class="sub">Three logbooks. One ship. Same universe.</div>
     <p>Every deck of this ship teaches you something different — but it's all connected. Pick a logbook and start exploring. 👇</p>
   </div>
 
@@ -189,6 +191,18 @@
       </div>
       <a class="go" href="https://astrosketchbook.vercel.app/">Open Logbook →</a>
     </div>
+
+    <div class="book thematic">
+      <div class="icon">🎨</div>
+      <h2>Thematic Sketchbook</h2>
+      <div class="tagline">DRAW &amp; DISCOVER</div>
+      <p>Grab your pencil. Sketch the Titanic, Mario physics, ocean currents, and kitchen chemistry — every drawing unlocks the science behind it.</p>
+      <div class="stats">
+        <span>📚 4 Mini-Books</span>
+        <span>🖍️ 36 Pages</span>
+      </div>
+      <a class="go" href="https://jjthematicsketchbook.vercel.app/">Open Logbook →</a>
+    </div>
   </div>
 
   <div class="bridge">
@@ -199,6 +213,7 @@
       <div class="row"><span class="arrow">🧲</span><span>Science Quest teaches the <b>force</b> that pulls a dropped pencil down.</span></div>
       <div class="row"><span class="arrow">➡️</span><span>Astro Sketchbook shows <b>gravity</b> holding entire galaxies together.</span></div>
       <div class="row"><span class="arrow">🧠</span><span>Same rules. Different scale. Learn it small, spot it big.</span></div>
+      <div class="row"><span class="arrow">🎨</span><span>Then <b>draw it yourself</b> in the Thematic Sketchbook — the Titanic floats for the exact same reason a rubber duck does.</span></div>
     </div>
   </div>
 
