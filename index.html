@@ -122,6 +122,40 @@
   .footer{text-align:center; margin-top:10px;}
   .footer .stamp{color:rgba(245,239,224,.4); font-size:10px;}
 
+
+  .book.photon{--spine:#6EE7D8;}
+  .book.done{--spine:var(--bio); opacity:.92;}
+  .book .ribbon{position:absolute; top:12px; right:28px; font-size:9px; color:var(--ok); background:rgba(90,209,138,.12); border:1px solid rgba(90,209,138,.4); border-radius:10px; padding:3px 8px;}
+  .book a.go.ghost{background:rgba(255,255,255,.08); color:var(--parchment); box-shadow:0 4px 0 rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.18);}
+  .captain,.voyage,.archive{border-radius:18px; padding:20px; margin:22px 0;}
+  .captain{background:linear-gradient(160deg,rgba(232,185,62,.14),rgba(255,255,255,.03)); border:1px solid rgba(232,185,62,.4); text-align:center;}
+  .voyage{background:rgba(255,255,255,.045); border:1px solid rgba(93,150,199,.35);}
+  .archive{background:rgba(21,56,36,.25); border:1px dashed rgba(90,209,138,.4);}
+  .captain h3,.voyage h3,.archive h3{color:var(--gold); font-size:15px; margin-bottom:6px;}
+  .voyage h3 .stamp{font-size:10px; color:rgba(245,239,224,.5); margin-left:6px;}
+  .hint,.sub2{font-size:13px; color:rgba(245,239,224,.7); line-height:1.5; margin-bottom:12px;}
+  .archive .book{margin-top:10px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:14px;}
+  .chip{font:inherit; font-size:12.5px; padding:7px 11px; border-radius:20px; cursor:pointer; color:rgba(245,239,224,.5); background:transparent; border:1px solid rgba(255,255,255,.2);}
+  .chip.on{color:var(--parchment); background:rgba(232,185,62,.18); border-color:var(--gold);}
+  .wheel{margin:0 auto 14px; width:100%; max-width:300px; padding:18px 10px; border-radius:50% / 40%; background:radial-gradient(circle at 35% 30%,#1b2a52,#0a0f20); border:5px solid var(--gold); box-shadow:inset 0 0 18px rgba(0,0,0,.6);}
+  .wicon{font-size:44px; line-height:1.1;}
+  .wname{font-size:15px; font-weight:700; margin-top:4px;}
+  .wheel.spin .wicon{animation:bob .35s ease-in-out infinite;}
+  @keyframes bob{50%{transform:translateY(-6px) rotate(-6deg);}}
+  button.draw,.sail{display:block; width:100%; max-width:300px; margin:0 auto; font:inherit; font-weight:700; font-size:15px; padding:13px; border-radius:12px; border:0; cursor:pointer; text-align:center; text-decoration:none; color:var(--ink); background:linear-gradient(180deg,#f6d675,var(--gold)); box-shadow:0 4px 0 var(--gold-dim);}
+  button.draw:active{transform:translateY(2px); box-shadow:0 2px 0 var(--gold-dim);}
+  button.draw:disabled{opacity:.6;}
+  .sail{margin-top:12px; background:linear-gradient(180deg,#8be8b0,var(--ok)); box-shadow:0 4px 0 #2f7d4f;}
+  .brow{display:grid; grid-template-columns:96px 1fr 28px; align-items:center; gap:8px; margin:8px 0; font-size:12.5px;}
+  .brow .nm{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .track{height:16px; border-radius:10px; background:rgba(255,255,255,.08); position:relative;}
+  .fill{height:100%; border-radius:10px; min-width:0; transition:width .5s;}
+  .fill::after{content:"🚢"; position:absolute; top:-5px; font-size:17px; margin-left:-4px;}
+  .brow .ct{text-align:right; font-weight:700; color:var(--gold);}
+  .leader{margin-top:12px; font-size:13.5px; text-align:center; color:var(--parchment);}
+  .reset{font:inherit; font-size:11px; background:none; border:0; color:rgba(245,239,224,.35); margin-top:8px; cursor:pointer;}
+
   @media (prefers-reduced-motion: no-preference){
     .porthole .twinkle{animation:tw 3.2s ease-in-out infinite;}
     .porthole .twinkle:nth-child(2){animation-delay:.6s;}
@@ -171,18 +205,27 @@
     <p>Every deck of this ship teaches you something different — but it's all connected. Pick a logbook and start exploring. 👇</p>
   </div>
 
-  <div class="fleet">
-    <div class="book science">
-      <div class="icon">🧪</div>
-      <h2>Science Quest</h2>
-      <div class="tagline">THE SKETCHBOOK SAGA</div>
-      <p>Explore 5 worlds below deck. Fight boss battles. Figure out how everything — cells, forces, chemicals, ecosystems — actually works.</p>
-      <div class="stats">
-        <span>🗺️ 5 Worlds</span>
-        <span>⚔️ 13 Boss Fights</span>
-      </div>
-      <a class="go" href="https://photonsciencesketchbooksaga.netlify.app">Open Logbook →</a>
+
+  <div class="captain">
+    <h3>🎲 CAPTAIN'S DRAW</h3>
+    <div class="hint">Can't decide? Let the sea choose. Or skip it and pick your own logbook below. Both are great! 🧭</div>
+    <div class="chips" id="chips"></div>
+    <div class="wheel" id="wheel" aria-live="polite">
+      <div class="wicon" id="wIcon">🧭</div>
+      <div class="wname" id="wName">Where to today?</div>
     </div>
+    <button class="draw" id="drawBtn">🎲 Draw today's heading</button>
+    <a class="go sail" id="sailBtn" href="#" style="display:none">⚓ Set sail →</a>
+  </div>
+
+  <div class="voyage">
+    <h3>📜 VOYAGE LOG <span class="stamp" id="monthLbl"></span></h3>
+    <div class="hint">Days you sailed each logbook this month. One tap on "Open Logbook" = one day logged.</div>
+    <div id="bars"></div>
+    <div class="leader" id="leader"></div>
+  </div>
+
+  <div class="fleet">
 
     <div class="book astro">
       <div class="icon">🔭</div>
@@ -193,7 +236,7 @@
         <span>🌌 6 Modules</span>
         <span>⭐ 80 Concepts</span>
       </div>
-      <a class="go" href="https://astrosketchbook.vercel.app/">Open Logbook →</a>
+      <a class="go" data-book="astro" href="https://astrosketchbook.vercel.app/">Open Logbook →</a>
     </div>
 
     <div class="book thematic">
@@ -205,7 +248,7 @@
         <span>📚 4 Mini-Books</span>
         <span>🖍️ 36 Pages</span>
       </div>
-      <a class="go" href="https://jjthematicsketchbook.vercel.app/">Open Logbook →</a>
+      <a class="go" data-book="thematic" href="https://jjthematicsketchbook.vercel.app/">Open Logbook →</a>
     </div>
 
     <div class="book chem">
@@ -217,7 +260,7 @@
         <span>🗺️ 5 Worlds</span>
         <span>🧪 25 Missions</span>
       </div>
-      <a class="go" href="https://jjchemlabsketchbook.vercel.app/">Open Logbook →</a>
+      <a class="go" data-book="chem" href="https://jjchemlabsketchbook.vercel.app/">Open Logbook →</a>
     </div>
 
     <div class="book exam">
@@ -229,7 +272,19 @@
         <span>✏️ 39 Missions</span>
         <span>🏅 10 Ranks</span>
       </div>
-      <a class="go" href="https://jjexamsketches.vercel.app/">Open Logbook →</a>
+      <a class="go" data-book="exam" href="https://jjexamsketches.vercel.app/">Open Logbook →</a>
+    </div>
+
+    <div class="book photon">
+      <div class="icon">💡</div>
+      <h2>Photon Science Sketchbook</h2>
+      <div class="tagline">PHOTON EXAM PREP</div>
+      <p>Your practice deck for next year's Photon exam. Sketch it, solve it, sail through it — one small page at a time.</p>
+      <div class="stats">
+        <span>🎯 Exam Prep</span>
+        <span>🗓️ Next Year</span>
+      </div>
+      <a class="go" data-book="photon" href="https://jjphotonsciencesketchbook.vercel.app/">Open Logbook →</a>
     </div>
   </div>
 
@@ -247,10 +302,103 @@
     </div>
   </div>
 
+  <div class="archive">
+    <h3>⚓ DOCKED IN HARBOUR</h3>
+    <div class="sub2">Voyages complete. Well sailed, Explorer! 🎉</div>
+    <div class="book science done">
+      <div class="ribbon stamp">✅ Voyage Complete</div>
+      <div class="icon">🧪</div>
+      <h2>Science Quest</h2>
+      <div class="tagline">THE SKETCHBOOK SAGA</div>
+      <p>5 worlds explored. 13 boss fights faced. Anchored safely in the harbour. Come back any time to revisit a deck.</p>
+      <a class="go ghost" data-book="science" href="https://photonsciencesketchbooksaga.netlify.app">Revisit Logbook →</a>
+    </div>
+  </div>
+
   <div class="footer">
     <div class="stamp">Fair winds &amp; following seas, Explorer ⚓</div>
   </div>
 
 </div>
+
+<script>
+(function(){
+  var BOOKS={
+    astro:{n:'Astro Sketchbook',i:'🔭',c:'#FF6FA5',u:'https://astrosketchbook.vercel.app/'},
+    thematic:{n:'Thematic Sketchbook',i:'🎨',c:'#E8B93E',u:'https://jjthematicsketchbook.vercel.app/'},
+    chem:{n:'Chem Lab',i:'⚗️',c:'#D9724B',u:'https://jjchemlabsketchbook.vercel.app/'},
+    exam:{n:'Exam Sketches',i:'📝',c:'#4FA3D9',u:'https://jjexamsketches.vercel.app/'},
+    photon:{n:'Photon Science',i:'💡',c:'#6EE7D8',u:'https://jjphotonsciencesketchbook.vercel.app/'}
+  };
+  var NAMES={science:'Science Quest'};
+  var KEY='jjHubVoyageLog', mem={};
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return mem;}}
+  function save(d){mem=d;try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
+  function pad(n){return (n<10?'0':'')+n;}
+  var now=new Date(), mk=now.getFullYear()+'-'+pad(now.getMonth()+1), today=mk+'-'+pad(now.getDate());
+  function log(id){
+    var d=load(); d[mk]=d[mk]||{}; var a=d[mk][id]||[];
+    if(a.indexOf(today)<0){a.push(today);} d[mk][id]=a; save(d);
+  }
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('monthLbl').textContent=MONTHS[now.getMonth()]+' '+now.getFullYear();
+
+  function stats(){
+    var d=(load()[mk])||{}, ids=Object.keys(BOOKS), max=0, best=[];
+    ids.forEach(function(k){var c=(d[k]||[]).length; if(c>max){max=c;} });
+    var html='';
+    ids.slice().sort(function(a,b){return (d[b]||[]).length-(d[a]||[]).length;}).forEach(function(k){
+      var c=(d[k]||[]).length, w=max?Math.round(c/max*88):0;
+      if(max&&c===max){best.push(BOOKS[k].i+' '+BOOKS[k].n);}
+      html+='<div class="brow"><span class="nm">'+BOOKS[k].i+' '+BOOKS[k].n+'</span><div class="track"><div class="fill" style="width:'+w+'%;background:'+BOOKS[k].c+'"></div></div><span class="ct">'+c+'</span></div>';
+    });
+    document.getElementById('bars').innerHTML=html;
+    document.getElementById('leader').innerHTML=max
+      ?'🏆 Most sailed: <b>'+best.join(' & ')+'</b> ('+max+' day'+(max>1?'s':'')+')<br><button class="reset" id="resetBtn">Clear this month</button>'
+      :'🌊 Calm seas so far. Open any logbook to start your log!';
+    var r=document.getElementById('resetBtn');
+    if(r){r.onclick=function(){var d2=load(); delete d2[mk]; save(d2); stats();};}
+  }
+
+  var pool={}; Object.keys(BOOKS).forEach(function(k){pool[k]=true;});
+  var chips=document.getElementById('chips');
+  Object.keys(BOOKS).forEach(function(k){
+    var b=document.createElement('button'); b.className='chip on'; b.textContent=BOOKS[k].i+' '+BOOKS[k].n;
+    b.onclick=function(){
+      var on=Object.keys(pool).filter(function(x){return pool[x];});
+      if(pool[k]&&on.length<=1){return;}
+      pool[k]=!pool[k]; b.classList.toggle('on',pool[k]);
+    };
+    chips.appendChild(b);
+  });
+
+  var wheel=document.getElementById('wheel'), wi=document.getElementById('wIcon'), wn=document.getElementById('wName'),
+      btn=document.getElementById('drawBtn'), sail=document.getElementById('sailBtn');
+  function show(k){wi.textContent=BOOKS[k].i; wn.textContent=BOOKS[k].n;}
+  btn.onclick=function(){
+    var on=Object.keys(pool).filter(function(x){return pool[x];});
+    var pick=on[Math.floor(Math.random()*on.length)];
+    sail.style.display='none'; btn.disabled=true; wheel.classList.add('spin');
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ticks=reduce?0:16, i=0;
+    (function step(){
+      if(i>=ticks){
+        show(pick); wheel.classList.remove('spin'); btn.disabled=false; btn.textContent='🔁 Draw again';
+        wn.textContent=BOOKS[pick].n+' — today! 🎉';
+        sail.href=BOOKS[pick].u; sail.dataset.book=pick; sail.style.display='block'; return;
+      }
+      show(on[Math.floor(Math.random()*on.length)]); i++;
+      setTimeout(step,70+i*14);
+    })();
+  };
+
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[data-book]');
+    if(a){log(a.dataset.book);}
+  });
+  document.addEventListener('visibilitychange',function(){if(!document.hidden){stats();}});
+  stats();
+})();
+</script>
 </body>
 </html>
