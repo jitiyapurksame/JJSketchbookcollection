@@ -124,6 +124,7 @@
 
 
   .book.photon{--spine:#6EE7D8;}
+  .book.garage{--spine:#ffc933;}
   .book.done{--spine:var(--bio); opacity:.92;}
   .book .ribbon{position:absolute; top:12px; right:28px; font-size:9px; color:var(--ok); background:rgba(90,209,138,.12); border:1px solid rgba(90,209,138,.4); border-radius:10px; padding:3px 8px;}
   .book a.go.ghost{background:rgba(255,255,255,.08); color:var(--parchment); box-shadow:0 4px 0 rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.18);}
@@ -201,7 +202,7 @@
 
     <div class="nameplate stamp">⚓ Logbook Collection</div>
     <h1>J.J.'s Sketchbooks</h1>
-    <div class="sub">Five logbooks. One ship. Same universe.</div>
+    <div class="sub">Six logbooks. One ship. Same universe.</div>
     <p>Every deck of this ship teaches you something different — but it's all connected. Pick a logbook and start exploring. 👇</p>
   </div>
 
@@ -286,6 +287,18 @@
       </div>
       <a class="go" data-book="photon" href="https://jjphotonsciencesketchbook.vercel.app/">Open Logbook →</a>
     </div>
+
+    <div class="book garage">
+      <div class="icon">🚗</div>
+      <h2>Bug Garage Sketchbook</h2>
+      <div class="tagline">CAR RESTORATION LAB</div>
+      <p>Restore a rusty classic car, one job at a time. Fix rust, balance the engine, test the brakes and wire the lights, and watch your car come alive.</p>
+      <div class="stats">
+        <span>🔧 8 Jobs</span>
+        <span>🛠️ 5 Bays</span>
+      </div>
+      <a class="go" data-book="garage" href="https://jjbuggaragesketchbook.vercel.app/">Open Logbook →</a>
+    </div>
   </div>
 
   <div class="bridge">
@@ -328,7 +341,8 @@
     thematic:{n:'Thematic Sketchbook',i:'🎨',c:'#E8B93E',u:'https://jjthematicsketchbook.vercel.app/'},
     chem:{n:'Chem Lab',i:'⚗️',c:'#D9724B',u:'https://jjchemlabsketchbook.vercel.app/'},
     exam:{n:'Exam Sketches',i:'📝',c:'#4FA3D9',u:'https://jjexamsketches.vercel.app/'},
-    photon:{n:'Photon Science',i:'💡',c:'#6EE7D8',u:'https://jjphotonsciencesketchbook.vercel.app/'}
+    photon:{n:'Photon Science',i:'💡',c:'#6EE7D8',u:'https://jjphotonsciencesketchbook.vercel.app/'},
+    garage:{n:'Bug Garage',i:'🚗',c:'#ffc933',u:'https://jjbuggaragesketchbook.vercel.app/'}
   };
   var NAMES={science:'Science Quest'};
   var KEY='jjHubVoyageLog', mem={};
